@@ -42,7 +42,7 @@ namespace UnitTestProject1
 
 
 
-         [TestMethod]
+       //  [TestMethod]
         public void givenEmployeeOnPost_returnAddedEmployee()
         {
             RestRequest request = new RestRequest("/employee", Method.POST);
@@ -62,6 +62,32 @@ namespace UnitTestProject1
 
             Assert.AreEqual("Dhoni", dataresponse.name);
             Assert.AreEqual("5000", dataresponse.salary);
+
+        }
+
+
+
+
+          [TestMethod]
+        public void givenEmployeeId_updateEmployee()
+        {
+            RestRequest request = new RestRequest("/employee/7", Method.PUT);
+            JObject jObject = new JObject();
+
+            jObject.Add("name", "Padikkal");
+            jObject.Add("salary", "5800");
+
+
+            request.AddParameter("application/json", jObject, ParameterType.RequestBody);
+
+
+            IRestResponse response = client.Execute(request);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+
+            Employee dataresponse = JsonConvert.DeserializeObject<Employee>(response.Content);
+
+            Assert.AreEqual("Padikkal", dataresponse.name);
+            Assert.AreEqual("5800", dataresponse.salary);
 
         }
 
