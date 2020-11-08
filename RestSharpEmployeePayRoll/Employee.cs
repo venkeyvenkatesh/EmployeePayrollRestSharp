@@ -13,5 +13,12 @@ namespace RestSharpEmployeePayRoll
 
         public string salary { get; set; }
 
+        public Employee(string name,string salary)
+        {
+          
+            this.salary = salary;
+            this.name = name;
+        }
+
     }
 }
