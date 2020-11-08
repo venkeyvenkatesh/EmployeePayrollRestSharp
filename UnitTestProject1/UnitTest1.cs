@@ -40,5 +40,30 @@ namespace UnitTestProject1
             return response;
         }
 
+
+
+         [TestMethod]
+        public void givenEmployeeOnPost_returnAddedEmployee()
+        {
+            RestRequest request = new RestRequest("/employee", Method.POST);
+            JObject jObject = new JObject();
+
+            jObject.Add("name", "Dhoni");
+            jObject.Add("salary", "5000");
+
+
+            request.AddParameter("application/json", jObject, ParameterType.RequestBody);
+
+
+            IRestResponse response = client.Execute(request);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.Created);
+
+            Employee dataresponse = JsonConvert.DeserializeObject<Employee>(response.Content);
+
+            Assert.AreEqual("Dhoni", dataresponse.name);
+            Assert.AreEqual("5000", dataresponse.salary);
+
+        }
+
     }
 }
